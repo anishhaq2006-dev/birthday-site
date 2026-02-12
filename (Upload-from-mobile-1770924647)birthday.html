@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0d0f14;
+    --card: #141821;
+    --accent: #d4af37;
+    --text: #eaeaea;
+    --muted: #a0a0a0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* Background canvas */
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* Main container */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 80px 20px;
+    text-align: center;
+    animation: fadeIn 1.5s ease forwards;
+}
+
+/* Hero */
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.highlight {
+    color: var(--accent);
+}
+
+.message {
+    max-width: 700px;
+    margin: 0 auto 50px auto;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+/* Gallery */
+.gallery {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.gallery img {
+    width: 260px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 18px;
+    transition: all 0.4s ease;
+    filter: brightness(0.9);
+}
+
+.gallery img:hover {
+    transform: translateY(-8px);
+    filter: brightness(1);
+}
+
+/* Button */
+.button {
+    padding: 14px 35px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font-size: 15px;
+    letter-spacing: 1px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.button:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+/* Hidden message */
+.hidden-message {
+    margin-top: 30px;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+.hidden-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card effect */
+.card {
+    background: rgba(20, 24, 33, 0.6);
+    padding: 60px 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media(max-width:768px){
+    h1 {
+        font-size: 36px;
+    }
+    .gallery img {
+        width: 180px;
+        height: 180px;
+    }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="container">
+    <div class="card">
+        <h1>Happy Birthday, <span class="highlight">[Shivam]</span></h1>
+
+        <p class="message">
+           Another Chapter, Another Chance To Shine !
+                 Happy Birthday To My best brother In The world.
+        </p>
+
+        <div class="gallery">
+            <img src="img/img1.png.jpg" alt="">
+            <img src="img/img3.png.jpeg" alt="">
+            <img src="img/460481429_555605790259302_1130932931876841743_n_555605783592636.jpg" alt="">
+        </div>
+
+        <button class="button" onclick="revealMessage()">Read Something Personal</button>
+
+        <div class="hidden-message" id="specialMessage">
+         janamdin ki bhot bhot mubarak mere pyaare bhai ko tujhe meri bhi umar lag jaye , zindagi me jiske khawab dekhe use tu paale , har mushkil se bhagwaan teri hifazat kre mere pyaare bhai shivam.
+
+        </div>
+    </div>
+</div>
+
+<script>
+/* Reveal message */
+function revealMessage(){
+    document.getElementById("specialMessage").classList.toggle("show");
+}
+
+/* Subtle background particles */
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i = 0; i < 60; i++){
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5,
+        d: Math.random() * 0.5 + 0.2
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "rgba(212,175,55,0.4)";
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        p.y -= p.d;
+        if(p.y < 0){
+            p.y = canvas.height;
+            p.x = Math.random() * canvas.width;
+        }
+    });
+    requestAnimationFrame(draw);
+}
+draw();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
